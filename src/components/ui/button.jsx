@@ -20,7 +20,9 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-neutral-300 hover:text-accent-foreground hover:cursor-pointer",
         link: "text-primary underline-offset-4 hover:underline",
-        rose: "bg-rose-500 text-white shadow-md hover:bg-rose-600 px-4 py-2 rounded-full transition duration-200 ease-in-out  ",
+        rose: "bg-rose-500 text-white shadow-md hover:bg-rose-600 px-4 py-2 rounded-full transition duration-200 ease-in-out",
+        darkButton:
+          " bg-black text-white rounded-lg hover:bg-gray-800 duration-300 px-4 py-2 transition duration-200 ease-in-out",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
