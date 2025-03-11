@@ -2,9 +2,20 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { signupWithGoogle, user, logout } = useAuth();
+
+  const handleLogin = async () => {
+    const user = await signupWithGoogle();
+  };
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <header className="w-full bg-white p-2 md:p-4 flex justify-between items-center drop-shadow-xl">
       <div className="flex items-center space-x-2">
@@ -23,9 +34,22 @@ const Header = () => {
             Create Tour
           </Button>
         </NavLink>
-        <Button variant="ghost" className=" font-inter">
-          Sign In
-        </Button>
+
+        {user ? (
+          <>
+            <Button
+              variant="ghost"
+              className=" font-inter"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Button variant="ghost" className=" font-inter" onClick={handleLogin}>
+            Sign In
+          </Button>
+        )}
       </nav>
     </header>
   );
