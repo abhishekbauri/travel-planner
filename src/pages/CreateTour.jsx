@@ -1,4 +1,6 @@
+import SignInWithGoogle from "@/components/custom/SignInWithGoogle";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
 import { chatSession } from "@/service/AiModal";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -45,6 +47,8 @@ const companionOptions = [
 ];
 
 const CreateTour = () => {
+  const { user } = useAuth();
+
   const [tourData, setTourData] = useState({
     budget: null,
     travelCompanion: null,
@@ -180,13 +184,17 @@ const CreateTour = () => {
       </div>
 
       <div className="mt-10 flex justify-end items-center">
-        <Button
-          variant="darkButton"
-          className="font-playfair-display font-light tracking-wider"
-          onClick={GenerateTourHandler}
-        >
-          Generate Trip
-        </Button>
+        {user ? (
+          <Button
+            variant="darkButton"
+            className="font-playfair-display font-light tracking-wider"
+            onClick={GenerateTourHandler}
+          >
+            Generate Trip
+          </Button>
+        ) : (
+          <SignInWithGoogle />
+        )}
       </div>
     </div>
   );
