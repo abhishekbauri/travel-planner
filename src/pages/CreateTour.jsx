@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { chatSession } from "@/service/AiModal";
 import React, { useState } from "react";
+import { LoaderCircle } from "lucide-react";
+
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const budgetOptions = [
   {
@@ -48,6 +51,8 @@ const companionOptions = [
 
 const CreateTour = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [tourData, setTourData] = useState({
     budget: null,
@@ -91,14 +96,16 @@ const CreateTour = () => {
 
     const prompt = `Generate a ${tourData?.tripDays}-day travel plan for ${tourData?.travelCompanion} in ${tourData?.destination} with a ${tourData?.budget} budget, including budget-friendly hotel options (name, address, price, image, coordinates, rating, and description) and a detailed daily itinerary (place name, details, image, coordinates, ticket pricing, travel time, and best visiting time) in JSON format.`;
 
-    // console.log(prompt);
-
     try {
+      setLoading(true);
       const result = await chatSession.sendMessage(prompt);
-      // console.log(result?.response?.text());
+      const tripDetails = JSON.parse(result?.response?.text());
+      setLoading(false);
       toast("Trip Generated Successfully");
+      navigate(`/view-trip-details/${user.uid}`, { state: { tripDetails } });
     } catch (error) {
       toast("Failed to generate trip");
+      setLoading(false);
     }
   };
 
@@ -185,13 +192,20 @@ const CreateTour = () => {
 
       <div className="mt-10 flex justify-end items-center">
         {user ? (
-          <Button
-            variant="darkButton"
-            className="font-playfair-display font-light tracking-wider"
-            onClick={GenerateTourHandler}
-          >
-            Generate Trip
-          </Button>
+          loading ? (
+            <div className="flex items-center gap-x-2  bg-black text-white py-2 px-4 rounded-lg">
+              <LoaderCircle className="animate-spin" color="#fff" />
+              Please wait while we generate your trip....
+            </div>
+          ) : (
+            <Button
+              variant="darkButton"
+              className="font-playfair-display font-light tracking-wider"
+              onClick={GenerateTourHandler}
+            >
+              Generate Trip
+            </Button>
+          )
         ) : (
           <SignInWithGoogle />
         )}
