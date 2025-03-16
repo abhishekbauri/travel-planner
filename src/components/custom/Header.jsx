@@ -27,8 +27,8 @@ const Header = () => {
         />
       </div>
 
-      <nav className="hidden md:flex space-x-4">
-        <NavLink to="/create-tour">
+      <nav className=" md:flex space-x-4">
+        <NavLink to="/create-tour" className="hidden md:block">
           <Button variant="outline" className=" font-mono">
             <Plus />
             Create Tour
