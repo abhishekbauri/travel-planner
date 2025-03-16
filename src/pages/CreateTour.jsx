@@ -112,7 +112,8 @@ const CreateTour = () => {
   return (
     <div className="min-h-screen p-6 md:p-12 font-nunito">
       <h2 className="text-4xl font-bold text-gray-900 ">
-        Tell us about your travel preferences <span className="ml-3">🏔️🌴</span>
+        Tell us about your travel preferences{" "}
+        <span className="ml-3">🏕️🏖️🏜️🏝️</span>
       </h2>
       <p className="text-gray-600 mt-3">
         Just provide some basic information, and our trip planner will generate
@@ -146,15 +147,15 @@ const CreateTour = () => {
         <h1 className="block text-gray-700 font-bold text-xl mt-10">
           What is Your Budget?
         </h1>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {budgetOptions.map((option) => (
             <button
               key={option.label}
               onClick={() => handleOptionClick("budget", option.label)}
-              className={`py-4 px-8 border rounded-lg flex flex-col items-start hover:bg-gray-200 transition duration-300 ${
+              className={`py-4 px-8  shadow-md rounded-lg flex flex-col items-start hover:scale-105 hover:bg-gray-200 hover:-translate-y-3 transition duration-300 ease-in-out ${
                 tourData.budget === option.label
-                  ? "border-neutral-900"
-                  : "border-gray-300"
+                  ? " bg-gray-200 shadow-lg shadow-neutral-400"
+                  : ""
               }`}
             >
               <div className="flex gap-2 items-center space-y-2">
@@ -169,15 +170,15 @@ const CreateTour = () => {
         <h2 className="block text-gray-700 font-bold text-xl mt-10">
           Who do you plan on traveling with on your next adventure?
         </h2>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {companionOptions.map((option) => (
             <button
               key={option.label}
               onClick={() => handleOptionClick("travelCompanion", option.label)}
-              className={`py-4 px-8 border rounded-lg flex flex-col items-start hover:bg-gray-200 transition duration-300 ${
+              className={`py-4 px-8  shadow-md rounded-lg flex flex-col items-start hover:scale-105 hover:bg-gray-200 hover:-translate-y-3 transition duration-300 ease-in-out ${
                 tourData.travelCompanion === option.label
-                  ? "border-neutral-900"
-                  : "border-gray-300"
+                  ? "bg-gray-200 shadow-lg shadow-neutral-400"
+                  : ""
               }`}
             >
               <div className="flex gap-2 items-center space-y-2">
