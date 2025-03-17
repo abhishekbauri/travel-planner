@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { FcGoogle } from "react-icons/fc";
 
 const SignInWithGoogle = () => {
   const { signupWithGoogle } = useAuth();
@@ -19,18 +20,23 @@ const SignInWithGoogle = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Sign In with Google</DialogTitle>
+          <DialogTitle>
+            <div className="flex items-center gap-2">
+              <FcGoogle size={25} />
+              Sign In with Google
+            </div>
+          </DialogTitle>
           <DialogDescription>
             Sign in to generate a trip plan. We will not store any of your
             personal information.
           </DialogDescription>
         </DialogHeader>
-
         <Button
           variant="darkButton"
           className="font-playfair-display font-light tracking-wider hover:cursor-pointer"
           onClick={() => signupWithGoogle()}
         >
+          <FcGoogle />
           Sign In with Google
         </Button>
       </DialogContent>
