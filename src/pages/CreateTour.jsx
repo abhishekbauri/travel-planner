@@ -4,50 +4,9 @@ import { useAuth } from "@/context/AuthContext";
 import { chatSession } from "@/service/AiModal";
 import React, { useState } from "react";
 import { LoaderCircle } from "lucide-react";
-
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-
-const budgetOptions = [
-  {
-    label: "Cheap",
-    desc: "Explore more while spending less! Our budget-friendly option helps you save money without compromising on adventure. Enjoy cost-effective stays, affordable dining, and wallet-friendly experiences.",
-    icon: "💰",
-  },
-  {
-    label: "Moderate",
-    desc: "A balanced approach to travel! Enjoy a mix of comfort and affordability with mid-range accommodations, diverse dining choices, and experiences that offer great value without overspending.",
-    icon: "💵",
-  },
-  {
-    label: "Luxury",
-    desc: "Indulge in the finest experiences! Enjoy premium accommodations, gourmet dining, and exclusive activities for a lavish and stress-free getaway. Travel in style with the best amenities and services.",
-    icon: "✨",
-  },
-];
-
-const companionOptions = [
-  {
-    label: "Just Me",
-    desc: "Embark on a journey of self-discovery! Travel at your own pace, explore hidden gems, and enjoy the freedom of solo adventures with personalized experiences just for you.",
-    icon: " 🧳",
-  },
-  {
-    label: "A Couple",
-    desc: "Romance and adventure await! Whether it’s a honeymoon, anniversary, or just a getaway for two, enjoy special moments, scenic escapes, and unforgettable shared experiences.",
-    icon: "💑",
-  },
-  {
-    label: "Family",
-    desc: "Create lifelong memories with your loved ones! Family-friendly destinations, exciting activities for all ages, and hassle-free travel plans make your trip fun and stress-free.",
-    icon: "👨‍👩‍👧‍👦",
-  },
-  {
-    label: "Friends",
-    desc: "Adventure is better together! Explore new places, try thrilling activities, and make unforgettable memories with your closest friends on an exciting group trip.",
-    icon: "🏄",
-  },
-];
+import { budgetOptions, companionOptions } from "@/constants";
 
 const CreateTour = () => {
   const { user } = useAuth();
@@ -76,23 +35,36 @@ const CreateTour = () => {
     }));
   };
 
-  const GenerateTourHandler = async () => {
+  const ValidateTourData = () => {
     if (!tourData?.destination) {
       toast("Please enter your destination");
-      return;
+      return false;
+    }
+    if (/^\d+$/.test(tourData?.destination)) {
+      toast("Destination should not contain only numbers");
+      return false;
+    }
+    if (tourData?.destination.length < 3) {
+      toast("Destination should be at least 3 characters long");
+      return false;
     }
     if (tourData?.tripDays < 1 || tourData?.tripDays > 5) {
       toast("Trip Days should be between 1 and 5");
-      return;
+      return false;
     }
     if (!tourData?.budget) {
       toast("Please select budget");
-      return;
+      return false;
     }
     if (!tourData?.travelCompanion) {
       toast("Please select travel companion");
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const GenerateTourHandler = async () => {
+    if (!ValidateTourData()) return;
 
     const prompt = `Generate a ${tourData?.tripDays}-day travel plan for ${tourData?.travelCompanion} in ${tourData?.destination} with a ${tourData?.budget} budget, including budget-friendly hotel options (name, address, price, image, coordinates, rating, and description) and a detailed daily itinerary (place name, details, image, coordinates, ticket pricing, travel time, and best visiting time) in JSON format.`;
 
