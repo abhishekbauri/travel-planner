@@ -201,7 +201,7 @@ const CreateTour = () => {
           ) : (
             <Button
               variant="darkButton"
-              className="font-playfair-display font-light tracking-wider"
+              className="font-mono hover:cursor-pointer hover:-translate-y-2 transition duration-300 ease-in-out"
               onClick={GenerateTourHandler}
             >
               Generate Trip
