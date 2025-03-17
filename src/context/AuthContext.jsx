@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { signupWithGoogle, logout } from "../service/authentication";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { app } from "@/service/firebase";
+import useInactivityTimer from "@/hooks/useInactivityTimer";
 
 const AuthContext = createContext();
 
@@ -18,6 +19,8 @@ export const AuthProvider = ({ children }) => {
 
     return () => unsubscribe();
   }, [auth]);
+
+  useInactivityTimer(setUser);
 
   return (
     <AuthContext.Provider value={{ user, loading, signupWithGoogle, logout }}>
