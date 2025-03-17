@@ -49,7 +49,7 @@ const Home = () => {
       </p>
       <Button
         variant="rose"
-        className="mt-8 font-mono cursor-pointer"
+        className="mt-8 font-mono cursor-pointer hover:bg-rose-600 hover:shadow-lg hover:shadow-rose-400 hover:scale-105 transition duration-300 ease-in-out"
         onClick={() => navigate("/create-tour")}
       >
         Get Started, It's Free
