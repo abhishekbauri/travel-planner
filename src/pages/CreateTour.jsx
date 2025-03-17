@@ -76,23 +76,36 @@ const CreateTour = () => {
     }));
   };
 
-  const GenerateTourHandler = async () => {
+  const ValidateTourData = () => {
     if (!tourData?.destination) {
       toast("Please enter your destination");
-      return;
+      return false;
+    }
+    if (/^\d+$/.test(tourData?.destination)) {
+      toast("Destination should not contain only numbers");
+      return false;
+    }
+    if (tourData?.destination.length < 3) {
+      toast("Destination should be at least 3 characters long");
+      return false;
     }
     if (tourData?.tripDays < 1 || tourData?.tripDays > 5) {
       toast("Trip Days should be between 1 and 5");
-      return;
+      return false;
     }
     if (!tourData?.budget) {
       toast("Please select budget");
-      return;
+      return false;
     }
     if (!tourData?.travelCompanion) {
       toast("Please select travel companion");
-      return;
+      return false;
     }
+    return true;
+  };
+
+  const GenerateTourHandler = async () => {
+    if (!ValidateTourData()) return;
 
     const prompt = `Generate a ${tourData?.tripDays}-day travel plan for ${tourData?.travelCompanion} in ${tourData?.destination} with a ${tourData?.budget} budget, including budget-friendly hotel options (name, address, price, image, coordinates, rating, and description) and a detailed daily itinerary (place name, details, image, coordinates, ticket pricing, travel time, and best visiting time) in JSON format.`;
 
