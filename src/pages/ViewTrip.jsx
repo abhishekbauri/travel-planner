@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const ViewTrip = () => {
   const location = useLocation();
@@ -23,26 +23,33 @@ const ViewTrip = () => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {tripDetails?.hotelOptions?.map((hotel, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-lg shadow-md hover:drop-shadow-xl ease-in-out hover:-translate-y-3 transition duration-300"
+          <Link
+            to={`https://www.google.com/maps/search/?api=1&query=${hotel?.name},${hotel?.address}`}
+            target="_blank"
           >
-            <img
-              src={"/hotel.jpg" || hotel?.image}
-              alt={hotel?.name}
-              className="w-full h-50 object-cover overflow-hidden rounded-t-md"
-            />
-            <div className="p-4 font-nunito">
-              <h3 className="text-lg font-bold ">{hotel?.name}</h3>
-              <p className="text-sm text-gray-600">{hotel?.address}</p>
-              <p className="text-sm text-gray-700 font-semibold">
-                Price: {hotel?.price}
-              </p>
-              <p className="text-sm text-yellow-500 ">
-                Rating: <span className="font-bold">{hotel?.rating} ⭐</span>
-              </p>
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-md hover:drop-shadow-xl ease-in-out hover:-translate-y-3 transition duration-300"
+            >
+              <img
+                src={"/hotel.jpg" || hotel?.image}
+                alt={hotel?.name}
+                className="w-full h-50 object-cover overflow-hidden rounded-t-md"
+              />
+              <div className="p-4 font-nunito">
+                <h3 className="text-lg font-bold truncate">{hotel?.name}</h3>
+                <p className="text-sm text-gray-600 truncate">
+                  {hotel?.address}
+                </p>
+                <p className="text-sm text-gray-700 font-semibold truncate">
+                  Price: <span className="font-bold">{hotel?.price}</span>
+                </p>
+                <p className="text-sm text-yellow-500 ">
+                  Rating: <span className="font-bold">{hotel?.rating} ⭐</span>
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
