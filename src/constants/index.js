@@ -38,3 +38,22 @@ export const companionOptions = [
     icon: "🏄",
   },
 ];
+
+export const imageSrcForCarousel = [
+  {
+    src: "/photo1.jpg",
+    alt: "Photo 1",
+  },
+  {
+    src: "/photo2.jpg",
+    alt: "Photo 2",
+  },
+  {
+    src: "/photo3.jpg",
+    alt: "Photo 3",
+  },
+  {
+    src: "/photo4.jpg",
+    alt: "Photo 4",
+  },
+];
