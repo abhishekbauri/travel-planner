@@ -1,32 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
 
-const imageSrc = [
-  {
-    src: "/photo1.jpg",
-    alt: "Photo 1",
-  },
-  {
-    src: "/photo2.jpg",
-    alt: "Photo 2",
-  },
-  {
-    src: "/photo3.jpg",
-    alt: "Photo 3",
-  },
-  {
-    src: "/photo4.jpg",
-    alt: "Photo 4",
-  },
-];
+const CarouselComponent = lazy(() =>
+  import("@/components/custom/CarouselComponent")
+);
 
 const Home = () => {
   const navigate = useNavigate();
@@ -55,23 +33,15 @@ const Home = () => {
         Get Started, It's Free
       </Button>
 
-      <div className="mt-10 overflow-hidden">
-        <Carousel className="w-60 md:w-100 mx-auto">
-          <CarouselContent>
-            {imageSrc.map((element, index) => (
-              <CarouselItem key={element.alt}>
-                <img
-                  src={element.src}
-                  alt={element.alt}
-                  className="w-full h-40 md:h-60 object-cover rounded-lg"
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      </div>
+      <Suspense
+        fallback={
+          <div className="text-center text-4xl mt-10 text-neutral-800 font-playfair-display">
+            Loading...
+          </div>
+        }
+      >
+        <CarouselComponent />
+      </Suspense>
     </section>
   );
 };
