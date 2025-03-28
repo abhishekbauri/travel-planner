@@ -1,5 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.4, duration: 1.5, ease: "easeInOut" },
+  },
+};
 
 const HotelList = ({ hotelOptions }) => {
   return (
@@ -7,7 +17,13 @@ const HotelList = ({ hotelOptions }) => {
       <h2 className="text-2xl font-bold text-gray-700 mt-6 mb-4 font-inter">
         Hotel Options
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {hotelOptions?.map((hotel, index) => (
           <Link
             key={index}
@@ -36,7 +52,7 @@ const HotelList = ({ hotelOptions }) => {
             </div>
           </Link>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };

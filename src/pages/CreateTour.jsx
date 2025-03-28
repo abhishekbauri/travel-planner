@@ -7,6 +7,16 @@ import { LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { budgetOptions, companionOptions } from "@/constants";
+import { motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { staggerChildren: 0.4, duration: 1.5, ease: "easeInOut" },
+  },
+};
 
 const CreateTour = () => {
   const { user } = useAuth();
@@ -110,7 +120,7 @@ const CreateTour = () => {
         <input
           name="tripDays"
           type="number"
-          placeholder="Ex. 3"
+          placeholder="Min 1 and Max 5 days"
           className="w-full p-3 border border-gray-300 rounded-lg outline-none"
           value={tourData.tripDays}
           onChange={handleInputChange}
@@ -119,7 +129,13 @@ const CreateTour = () => {
         <h1 className="block text-gray-700 font-bold text-xl mt-10">
           What is Your Budget?
         </h1>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {budgetOptions.map((option) => (
             <button
               key={option.label}
@@ -137,12 +153,18 @@ const CreateTour = () => {
               <p className="text-gray-500 text-start">{option.desc}</p>
             </button>
           ))}
-        </div>
+        </motion.div>
 
         <h2 className="block text-gray-700 font-bold text-xl mt-10">
           Who do you plan on traveling with on your next adventure?
         </h2>
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {companionOptions.map((option) => (
             <button
               key={option.label}
@@ -160,7 +182,7 @@ const CreateTour = () => {
               <p className="text-gray-500 text-start">{option.desc}</p>
             </button>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       <div className="mt-10 flex justify-end items-center">
