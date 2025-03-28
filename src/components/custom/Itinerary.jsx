@@ -1,4 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 150,
+      damping: 5,
+      ease: "easeInOut",
+      duration: 1.5,
+    },
+  },
+};
 
 const Itinerary = ({ itinerary }) => {
   return (
@@ -8,7 +24,14 @@ const Itinerary = ({ itinerary }) => {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {Object.entries(itinerary || {}).map(([day, details]) => (
-          <div key={day} className="bg-white p-4 rounded-lg shadow-md">
+          <motion.div
+            key={day}
+            className="bg-white p-4 rounded-lg shadow-md"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <h2 className="text-center text-xl text-gray-900 capitalize font-bold font-playfair-display">
               {day}
             </h2>
@@ -31,7 +54,7 @@ const Itinerary = ({ itinerary }) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>
