@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { budgetOptions, companionOptions } from "@/constants";
 import { motion } from "motion/react";
+import { validateTourData } from "@/validation/validateTourData";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -45,36 +46,8 @@ const CreateTour = () => {
     }));
   };
 
-  const ValidateTourData = () => {
-    if (!tourData?.destination) {
-      toast("Please enter your destination");
-      return false;
-    }
-    if (/^\d+$/.test(tourData?.destination)) {
-      toast("Destination should not contain only numbers");
-      return false;
-    }
-    if (tourData?.destination.length < 3) {
-      toast("Destination should be at least 3 characters long");
-      return false;
-    }
-    if (tourData?.tripDays < 1 || tourData?.tripDays > 5) {
-      toast("Trip Days should be between 1 and 5");
-      return false;
-    }
-    if (!tourData?.budget) {
-      toast("Please select budget");
-      return false;
-    }
-    if (!tourData?.travelCompanion) {
-      toast("Please select travel companion");
-      return false;
-    }
-    return true;
-  };
-
   const GenerateTourHandler = async () => {
-    if (!ValidateTourData()) return;
+    if (!validateTourData(tourData)) return;
 
     const prompt = `Generate a ${tourData?.tripDays}-day travel plan for ${tourData?.travelCompanion} in ${tourData?.destination} with a ${tourData?.budget} budget, including budget-friendly hotel options (name, address, price, image, coordinates, rating, and description) and a detailed daily itinerary (place name, details, image, coordinates, ticket pricing, travel time, and best visiting time) in JSON format.`;
 

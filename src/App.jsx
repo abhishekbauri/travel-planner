@@ -5,11 +5,13 @@ import CreateTour from "./pages/CreateTour";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/custom/ProtectedRoute";
 import ViewTrip from "./pages/ViewTrip";
+import ScrollToTop from "./components/custom/ScrollToTop ";
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
